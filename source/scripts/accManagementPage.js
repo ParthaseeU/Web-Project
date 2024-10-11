@@ -1,4 +1,4 @@
-function togglePasswordVisibility(passwordId,toggleId) {
+function togglePasswordVisibility(passwordId, toggleId) {
 
     //should retrieve passwordid because this function is being used upon 3 different password box;
     var passwordInput = document.getElementById(passwordId);
@@ -11,10 +11,10 @@ function togglePasswordVisibility(passwordId,toggleId) {
 
     if (passwordInput.type === "password") { //displaying dots
         passwordInput.type = "text";
-        toggleIcon.src = "icons/eye-open.png"; //icon to indicate hiding where upon click hides back the password
+        toggleIcon.src = "assets/eye-open.png"; //  icon to indicate hiding
 
     } else { //displaying texts
         passwordInput.type = "password";
-        toggleIcon.src = "icons/eye-close.png"; //  show icon
+        toggleIcon.src = "assets/eye-close.png"; //  show icon
     }
 }

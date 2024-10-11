@@ -205,7 +205,7 @@ require 'partials/navBar.php';
                             <div class="login-password">
                                 <input type="password" name="currentpassword" id="password" placeholder=" " required>
                                 <label for="password">Password</label>
-                                <img src="icons/eye-close.png" id="toggle-password" onclick="togglePasswordVisibility('password','toggle-password')">
+                                <img src="assets/eye-close.png" id="toggle-password" onclick="togglePasswordVisibility('password','toggle-password')">
                             </div>
                         </div>
 
@@ -213,7 +213,7 @@ require 'partials/navBar.php';
                             <div class="login-password">
                                 <input type="password" required placeholder=" " name="newpassword" id="newpassword">
                                 <label>New Password</label>
-                                <img src="icons/eye-close.png" id="toggle-newpassword" onclick="togglePasswordVisibility('newpassword','toggle-newpassword')">
+                                <img src="assets/eye-close.png" id="toggle-newpassword" onclick="togglePasswordVisibility('newpassword','toggle-newpassword')">
                             </div>
                         </div>
 
@@ -221,7 +221,7 @@ require 'partials/navBar.php';
                             <div class="login-password">
                                 <input type="password" required placeholder=" " name="renewpassword" id="renewpassword">
                                 <label>Confirm New Password</label>
-                                <img src="icons/eye-close.png" id="toggle-renewpassword" onclick="togglePasswordVisibility('renewpassword','toggle-renewpassword')">
+                                <img src="assets/eye-close.png" id="toggle-renewpassword" onclick="togglePasswordVisibility('renewpassword','toggle-renewpassword')">
                             </div>
                         </div>
                         <button type="submit" id="personalinfo-changepassword" name="personalinfo-changepassword" class="indigoTheme roundBorder savebutton" form="passwordchange-form" style="margin-left: 50px;">Save Changes</button>
