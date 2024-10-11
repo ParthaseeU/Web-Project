@@ -13,12 +13,15 @@
 
     require_once '../connect.php';
     session_start();
+    
+    
+    if(isset($_POST['userId']) && isset($_POST['userType'])){
 
-    $_SESSION['UserID-Clicked'] = 3;
-    $_SESSION['UserType'] = 'Student';
-    $_SESSION['Name'] = 'abc Deez';
-    $_SESSION['FirstName'] = 'abc';
-    $_SESSION['LastName'] = 'Deez';
+        // No need to sanitize because this came from an already sanitize source
+
+        $_SESSION['UserID-Clicked'] = $_POST['userId'];
+        $_SESSION['UserType'] = $_POST['userType'];
+    }
 
     $_SESSION['DateJoined'] = NULL;
     $_SESSION['Authorisation'] = NULL;
@@ -28,9 +31,11 @@
     $stmt->execute([$_SESSION['UserID-Clicked']]);
     $User = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $_SESSION['FirstName'] = $User['FirstName'];
+    $_SESSION['LastName'] = $User['LastName'];
     $_SESSION['Gender'] = $User['Gender'];
-    $_SESSION['DateOfBirth'] = $User['DateOfBirth'];
     $_SESSION['Email'] = $User['Email'];
+
 
 
     // If user is a student, query the student table using UserID to get additional data.
@@ -74,7 +79,7 @@
         }
     }
 
-    header("Location: adminPage.php");
+    header("Location: userClicked.php");
     exit();
     ?>
 </body>

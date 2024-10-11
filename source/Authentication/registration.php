@@ -41,7 +41,9 @@
                 else {
                     // Check if email already exists
                     $sTestEmail = $pdo->prepare('SELECT * FROM user WHERE Email = "' . $email . '";');
-                    if ($sTestEmail->execute() != 0)
+                    $sTestEmail->execute();
+
+                    if ($sTestEmail->rowCount() > 0)
                         array_push($errors, "Email already exists!");
 
                     // Close the buffer so that I don't get an exception when executing other statements
@@ -124,6 +126,7 @@
                             break;
                         case 'Admin':
                             $sInsertAdmin = $pdo->prepare('CALL sp_addAdmin(?, ?, ?, ?, ?, ?, ?)');
+                            $datejoinedadmin = date('Y-m-d');
                             $sInsertAdmin->execute([$firstname, $lastname, $email, $gender, $dateofbirth, $passwordhash, $datejoinedadmin]);
                             break;
                     }

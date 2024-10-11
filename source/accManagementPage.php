@@ -61,26 +61,29 @@ require 'partials/navBar.php';
             </div>
             <div class="personalinfo-content2  second-column">
                 <form id="personalinfo-form" class="personalinfo-grid" method="post" action="AccountManagement/personalinfo.php">
+                    <!--Field atrributes such as firstname, lastname, ...  -->
                     <div class="information">
                         <label class="sub-information">First Name: </label>
                         <input class="information-input" type="text" id="firstname" name="firstname" value="<?php echo $_SESSION['FirstName']; ?>">
                     </div>
+
                     <div class="information">
                         <label class="sub-information" for="lastname">Last Name: </label>
                         <input class="information-input" type="text" id="lastname" name="lastname" value="<?php echo $_SESSION['LastName']; ?>">
                     </div>
-                    <!--  -->
-
+  
                     <div class="information">
                         <label class="sub-information" for="gender">Gender: </label>
                         <input class="information-input" type="text" id="gender" name="gender" value="<?php echo $_SESSION['Gender']; ?>"> <!-- must do a dropdown menu like in register -->
 
                     </div>
+
                     <div class="information">
                         <label class="sub-information" for="dateofbirth">Date Of Birth: </label>
                         <input class="information-input" type="date" id="dateofbirth" name="dateofbirth" value="<?php echo date('Y-m-d', strtotime($_SESSION['DateOfBirth'])); ?>"> <!-- Formats date in proper format -->
 
                     </div>
+
                     <div class="information personalinfo-email">
                         <label class="sub-information" for="email">Email: </label>
                         <input class="information-input" type="email" id="email" name="email" value="<?php echo $_SESSION['Email']; ?>" style="width:300px;">
@@ -92,6 +95,7 @@ require 'partials/navBar.php';
                 <?php
 
                 // Check if there are any errors in the session
+                //This is where the message returned from the personalinfo.php is deisplayed
                 if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) {
 
                     foreach ($_SESSION['errors'] as $error) {
@@ -110,62 +114,82 @@ require 'partials/navBar.php';
                 ?>
 
             </div>
+            
 
             <!--Displaying either student or teacher information-->
-            <?php if (empty($_SESSION['Level']) && empty($_SESSION['ClassGroup'])): //Checks if it is a student or a teacher
+            <?php 
+            if (isset($_SESSION['SubjectTaught'])): // Checks if it is a teacher
             ?>
 
-                <!--Teacher information  -->
+                <!-- Teacher information -->
                 <div id="teacherinformation" class="teacherinformation-content first-column">
                     <h2>Teacher information</h2>
-                    <div id="teacherinformation-description" class="information description">This is your private teacher information that is stored and will be used only for educative purposes.</div>
+                    <div id="teacherinformation-description" class="information description">
+                        This is your private teacher information that is stored and will be used only for educative purposes.
+                    </div>
                 </div>
-                <div class="teacherinformation-content2  second-column">
+                <div class="teacherinformation-content2 second-column">
                     <div class="information">
                         <div class="sub-information">Teaching subject:</div>
-                        <div class="information-input"> <?php echo $_SESSION['SubjectTaught']; ?> </div>
+                        <div class="information-input"><?php echo $_SESSION['SubjectTaught']; ?></div>
                     </div>
                     <div class="information">
-                        <div class="sub-information">Date You joined EduPortal</div>
-                        <div class="information-input"> <?php echo date('jS F Y', strtotime($_SESSION['DateOfBirth'])) . "  "; //displays datejoined in words 
-                                                        ?> </div>
-                        <div class="information-input"> <?php echo "(" . (new DateTime($_SESSION['DateOfBirth']))->diff(new DateTime())->days . " days ago)"; //displays number of days that have passed
-                                                        ?>
-                        </div>
+                        <div class="sub-information">Date You joined EduPortal:</div>
+                        <div class="information-input"><?php echo date('jS F Y', strtotime($_SESSION['DateJoined'])); // Corrected to DateJoined ?></div>
+                        <div class="information-input"><?php echo "(" . (new DateTime($_SESSION['DateJoined']))->diff(new DateTime())->days . " days ago)"; ?></div>
                     </div>
                 </div>
 
-            <?php else: ?>
-                <!--Student information  -->
+            <?php elseif (isset($_SESSION['Level']) && isset($_SESSION['ClassGroup'])): // Corrected to elseif ?>
+                <!-- Student information -->
                 <div id="studentinfo" class="studentinformation-content first-column">
                     <h2>Student information</h2>
-                    <div id="studentinfo-description" class="information description">This is your private student information that is stored and will be used only for educative purposes.</div>
+                    <div id="studentinfo-description" class="information description">
+                        This is your private student information that is stored and will be used only for educative purposes.
+                    </div>
                 </div>
-                <div class="studentinformation-content2  second-column">
+                <div class="studentinformation-content2 second-column">
                     <div class="information">
-                        <div class="sub-information">Level</div>
-                        <div class="information-input"> <?php echo $_SESSION['Level']; ?> </div>
+                        <div class="sub-information">Level:</div>
+                        <div class="information-input"><?php echo $_SESSION['Level']; ?></div>
                     </div>
                     <div class="information">
-                        <div class="sub-information">Class Group</div>
-                        <div class="information-input"> <?php echo $_SESSION['ClassGroup']; ?> </div>
+                        <div class="sub-information">Class Group:</div>
+                        <div class="information-input"><?php echo $_SESSION['ClassGroup']; ?></div>
                     </div>
 
                     <div class="information studentinfo-grid">
-                        <div class="sub-information">Subjects Taken</div>
+                        <div class="sub-information">Subjects Taken:</div>
                         <div class="subjectstaken">
                             <?php
                             foreach ($_SESSION['Subjects'] as $Subjects) {
                                 echo '<div class="subject-item">';
-                                echo '<div class="subject-code">' . $Subjects['SubjectCode'] . '</div>';
-                                echo '<div class="subject-name">' . $Subjects['Subjectname'] . '</div>';
+                                echo '<div class="subject-code">' . htmlspecialchars($Subjects['SubjectCode']) . '</div>'; // Use htmlspecialchars for safety
+                                echo '<div class="subject-name">' . htmlspecialchars($Subjects['Subjectname']) . '</div>';
                                 echo '</div>';
                             }
                             ?>
                         </div>
                     </div>
                 </div>
+
+            <?php else: // If the user is neither Teacher nor Student ?>
+                <!-- Admin information -->
+                <div id="admininformation" class="admininformation-content first-column">
+                    <h2>Admin information</h2>
+                    <div id="admininformation-description" class="information description">
+                        This is your private admin information that is stored and will be used only for educative purposes.
+                    </div>
+                </div>
+                <div class="teacherinformation-content2 second-column">
+                    <div class="information">
+                        <div class="sub-information">Date You joined EduPortal:</div>
+                        <div class="information-input"><?php echo date('jS F Y', strtotime($_SESSION['DateJoined'])); ?></div> <!-- Corrected to DateJoined -->
+                        <div class="information-input"><?php echo "(" . (new DateTime($_SESSION['DateJoined']))->diff(new DateTime())->days . " days ago)"; ?></div>
+                    </div>
+                </div>
             <?php endif; ?>
+
 
             <!--login management  -->
             <div id="loginmanagement" class="login-content first-column">

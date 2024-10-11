@@ -35,6 +35,6 @@ if ($stmt->execute([$subjectCode, $StudentID])) {
 }
 
 // Redirect to the admin page
-header('Location: adminPage.php');
+header('Location: userClicked.php');
 exit();
 ?>

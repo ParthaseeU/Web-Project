@@ -91,7 +91,7 @@ body {
     display: grid;
     grid-template-rows: repeat(3, min-content);
     /* Adjusts the row height */
-    background-color: #987cde;
+    background-color: #cdbdf6;
     overflow-y: auto;
 }
 
@@ -99,13 +99,14 @@ body {
     border-collapse: collapse;
     text-align: center;
     border: 1px solid var(--purpleVortex);
+    border-bottom:2px solid var(--purpleVortex);
     height: 65vh;
 }
 
 .user-list th {
     padding-top: 0.2%;
     padding-bottom: 0.2%;
-    background-color: var(--purpleVortex);
+    background-color: #705ba5;
     color: white;
 }
 

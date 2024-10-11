@@ -117,6 +117,9 @@ CREATE PROCEDURE sp_addAdmin (
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
+
+
+
     BEGIN
         ROLLBACK;
     END;
@@ -130,7 +133,7 @@ BEGIN
 
     -- Insert into admin table
     INSERT INTO administrator ( AdminID , DateJoined)
-    VALUES ( userID, dateJoined);
+    VALUES ( userID, datejoined);
 
     -- Insert into approval
     INSERT INTO approval ( AdminID, UserID, UserType, IsApproved)
